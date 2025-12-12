@@ -1,3 +1,20 @@
+// Mapping of salsa options to person names
+const salsaNames = {
+    'Salsa 1': 'Steven Nguyen',
+    'Salsa 2': 'Andy Dang',
+    'Salsa 3': 'Richard Ramich',
+    'Salsa 4': 'Sylvia Wintrich',
+    'Salsa 5': 'Bradley Robinson'
+};
+
+// Function to get display name (person name for salsa, original for others)
+function getDisplayName(option, competition) {
+    if (competition === 'salsa' && salsaNames[option]) {
+        return salsaNames[option];
+    }
+    return option;
+}
+
 // Load and display results from Firebase
 async function loadResults() {
     try {
@@ -87,17 +104,17 @@ function displayResults(results) {
             
             <div class="category-result">
                 <h3>1. The Tastiest – best tasting dip</h3>
-                ${formatCategoryResult(results.salsa.tastiest, results.salsa.allVotes.tastiest)}
+                ${formatCategoryResult(results.salsa.tastiest, results.salsa.allVotes.tastiest, 'salsa')}
             </div>
             
             <div class="category-result">
                 <h3>2. 🔥 The Spiciest – the best spicy flavor</h3>
-                ${formatCategoryResult(results.salsa.spiciest, results.salsa.allVotes.spiciest)}
+                ${formatCategoryResult(results.salsa.spiciest, results.salsa.allVotes.spiciest, 'salsa')}
             </div>
             
             <div class="category-result">
                 <h3>3. 🎁 Best Presentation – the best-looking dish presentation</h3>
-                ${formatCategoryResult(results.salsa.presentation, results.salsa.allVotes.presentation)}
+                ${formatCategoryResult(results.salsa.presentation, results.salsa.allVotes.presentation, 'salsa')}
             </div>
         </div>
         
@@ -124,7 +141,7 @@ function displayResults(results) {
     resultsContainer.innerHTML = html;
 }
 
-function formatCategoryResult(winnerData, allVotes) {
+function formatCategoryResult(winnerData, allVotes, competition = null) {
     if (!allVotes || Object.keys(allVotes).length === 0) {
         return '<div class="no-votes">No votes yet</div>';
     }
@@ -135,7 +152,8 @@ function formatCategoryResult(winnerData, allVotes) {
         html += '<div class="winner">';
         html += '<div class="winner-label">🏆 Winner' + (winnerData.winners.length > 1 ? 's (Tie)' : '') + ':</div>';
         winnerData.winners.forEach(winner => {
-            html += `<div>${winner}</div>`;
+            const displayName = getDisplayName(winner, competition);
+            html += `<div>${displayName}</div>`;
         });
         html += `<div class="vote-count">${winnerData.votes} vote${winnerData.votes !== 1 ? 's' : ''}</div>`;
         html += '</div>';
@@ -151,9 +169,10 @@ function formatCategoryResult(winnerData, allVotes) {
     
     sortedVotes.forEach(([option, count]) => {
         const isWinner = winnerData.winners && winnerData.winners.includes(option) && count === winnerData.votes;
+        const displayName = getDisplayName(option, competition);
         html += `
             <div class="vote-item ${isWinner ? 'winner-item' : ''}">
-                <span class="vote-item-name">${option}</span>
+                <span class="vote-item-name">${displayName}</span>
                 <span class="vote-item-count">${count} vote${count !== 1 ? 's' : ''}</span>
             </div>
         `;
