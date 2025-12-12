@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salsa Competition Voting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌶️ Salsa Competition</h1>
+            <p class="subtitle">Cast your votes for the best salsa in each category</p>
+        </header>
+
+        <div class="links">
+            <a href="index.html" class="results-link">← Back to Home</a>
+        </div>
+
+        <div class="competition-card single-form">
+            <form id="salsaForm" class="voting-form">
+                <div class="category">
+                    <label>
+                        <span class="category-title">1. The Tastiest – best tasting dip</span>
+                        <select name="tastiest" required>
+                            <option value="">Select an option...</option>
+                            <option value="Salsa A">Salsa A</option>
+                            <option value="Salsa B">Salsa B</option>
+                            <option value="Salsa C">Salsa C</option>
+                            <option value="Salsa D">Salsa D</option>
+                            <option value="Salsa E">Salsa E</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="category">
+                    <label>
+                        <span class="category-title">2. 🔥 The Spiciest – the best spicy flavor</span>
+                        <select name="spiciest" required>
+                            <option value="">Select an option...</option>
+                            <option value="Salsa A">Salsa A</option>
+                            <option value="Salsa B">Salsa B</option>
+                            <option value="Salsa C">Salsa C</option>
+                            <option value="Salsa D">Salsa D</option>
+                            <option value="Salsa E">Salsa E</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="category">
+                    <label>
+                        <span class="category-title">3. 🎁 Best Presentation – the best-looking dish presentation</span>
+                        <select name="presentation" required>
+                            <option value="">Select an option...</option>
+                            <option value="Salsa A">Salsa A</option>
+                            <option value="Salsa B">Salsa B</option>
+                            <option value="Salsa C">Salsa C</option>
+                            <option value="Salsa D">Salsa D</option>
+                            <option value="Salsa E">Salsa E</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Salsa Votes</button>
+            </form>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+    <script src="christmas.js"></script>
+</body>
+</html>
+

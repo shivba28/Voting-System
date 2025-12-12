@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Results</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 Competition Results</h1>
+            <p class="subtitle">Live vote tallies and winners</p>
+        </header>
+
+        <div class="links">
+            <a href="index.html" class="results-link">← Back to Home</a>
+            <button onclick="refreshResults()" class="refresh-btn">🔄 Refresh Results</button>
+        </div>
+
+        <div id="results" class="results-container">
+            <div class="loading">Loading results...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="results.js"></script>
+    <script src="christmas.js"></script>
+</body>
+</html>
+

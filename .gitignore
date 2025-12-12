@@ -1,0 +1,16 @@
+# Firebase config (contains sensitive data)
+public/firebase-config.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log

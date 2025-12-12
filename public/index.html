@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System - Salsa & Costume Competitions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 Company Competition Voting</h1>
+            <p class="subtitle">Cast your votes for the Salsa Competition and Jolly Costume Contest</p>
+        </header>
+
+        <div class="button-container">
+            <a href="salsa.html" class="main-button salsa-button">
+                <span class="button-icon">🌶️</span>
+                <span class="button-title">Salsa Competition</span>
+                <span class="button-subtitle">Vote for the tastiest, spiciest, and best presented</span>
+            </a>
+
+            <a href="costume.html" class="main-button costume-button">
+                <span class="button-icon">🎄</span>
+                <span class="button-title">Jolly Costume Contest</span>
+                <span class="button-subtitle">Vote for most creative, jolliest jumper, and holiday humor</span>
+            </a>
+
+            <a href="results.html" class="main-button results-button">
+                <span class="button-icon">🎁</span>
+                <span class="button-title">View Results</span>
+                <span class="button-subtitle">See current vote tallies and winners</span>
+            </a>
+        </div>
+    </div>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="christmas.js"></script>
+</body>
+</html>

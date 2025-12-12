@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jolly Costume Contest Voting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎄 Jolly Costume Contest</h1>
+            <p class="subtitle">Cast your votes for the best costumes in each category</p>
+        </header>
+
+        <div class="links">
+            <a href="index.html" class="results-link">← Back to Home</a>
+        </div>
+
+        <div class="competition-card single-form">
+            <form id="costumeForm" class="voting-form">
+                <div class="category">
+                    <label>
+                        <span class="category-title">1. 🎨 Most Creative – the costume that wows with originality</span>
+                        <select name="creative" required>
+                            <option value="">Select an option...</option>
+                            <option value="Costume 1">Costume 1</option>
+                            <option value="Costume 2">Costume 2</option>
+                            <option value="Costume 3">Costume 3</option>
+                            <option value="Costume 4">Costume 4</option>
+                            <option value="Costume 5">Costume 5</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="category">
+                    <label>
+                        <span class="category-title">2. 🧶 Jolliest Jumper – the sweater that radiates pure holiday cheer</span>
+                        <select name="jumper" required>
+                            <option value="">Select an option...</option>
+                            <option value="Costume 1">Costume 1</option>
+                            <option value="Costume 2">Costume 2</option>
+                            <option value="Costume 3">Costume 3</option>
+                            <option value="Costume 4">Costume 4</option>
+                            <option value="Costume 5">Costume 5</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="category">
+                    <label>
+                        <span class="category-title">3. 😄 Holiday Humor – the costume that makes everyone laugh out loud</span>
+                        <select name="humor" required>
+                            <option value="">Select an option...</option>
+                            <option value="Costume 1">Costume 1</option>
+                            <option value="Costume 2">Costume 2</option>
+                            <option value="Costume 3">Costume 3</option>
+                            <option value="Costume 4">Costume 4</option>
+                            <option value="Costume 5">Costume 5</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Costume Votes</button>
+            </form>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+    <script src="christmas.js"></script>
+</body>
+</html>
+
