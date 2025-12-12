@@ -7,10 +7,27 @@ const salsaNames = {
     'Salsa 5': 'Bradley Robinson'
 };
 
-// Function to get display name (person name for salsa, original for others)
+// Mapping of costume options to person names
+const costumeNames = {
+    'Costume 1': 'Steven Nguyen',
+    'Costume 2': 'Sylvia Wintrich',
+    'Costume 3': 'Chase Hunter',
+    'Costume 4': 'Dane Yagi',
+    'Costume 5': 'Bradley Robinson',
+    'Costume 6': 'Richard Ramich',
+    'Costume 7': 'Jennie Kennedy',
+    'Costume 8': 'David Godoy',
+    'Costume 9': 'Carlos Larios',
+    'Costume 10': 'Andy Dang'
+};
+
+// Function to get display name (person name for salsa/costume, original for others)
 function getDisplayName(option, competition) {
     if (competition === 'salsa' && salsaNames[option]) {
         return salsaNames[option];
+    }
+    if (competition === 'costume' && costumeNames[option]) {
+        return costumeNames[option];
     }
     return option;
 }
@@ -32,10 +49,9 @@ async function loadResults() {
 
 // Get results from Firebase
 async function getResults() {
-    const votesRef = db.collection('votes');
-    
-    // Get all vote documents
-    const snapshot = await votesRef.get();
+    // Get both documents separately
+    const salsaDoc = await db.collection('votes').doc('salsa').get();
+    const costumeDoc = await db.collection('votes').doc('costume').get();
     
     let allVotes = {
         salsa: {
@@ -50,16 +66,21 @@ async function getResults() {
         }
     };
     
-    // Combine all vote documents
-    snapshot.forEach(doc => {
-        const data = doc.data();
-        if (data.salsa) {
-            allVotes.salsa = data.salsa;
+    // Get salsa data from salsa document
+    if (salsaDoc.exists) {
+        const salsaData = salsaDoc.data();
+        if (salsaData && salsaData.salsa) {
+            allVotes.salsa = salsaData.salsa;
         }
-        if (data.costume) {
-            allVotes.costume = data.costume;
+    }
+    
+    // Get costume data from costume document
+    if (costumeDoc.exists) {
+        const costumeData = costumeDoc.data();
+        if (costumeData && costumeData.costume) {
+            allVotes.costume = costumeData.costume;
         }
-    });
+    }
     
     // Calculate winners for each category
     function getWinner(categoryVotes) {
@@ -123,17 +144,17 @@ function displayResults(results) {
             
             <div class="category-result">
                 <h3>1. 🎨 Most Creative – the costume that wows with originality</h3>
-                ${formatCategoryResult(results.costume.creative, results.costume.allVotes.creative)}
+                ${formatCategoryResult(results.costume.creative, results.costume.allVotes.creative, 'costume')}
             </div>
             
             <div class="category-result">
                 <h3>2. 🧶 Jolliest Jumper – the sweater that radiates pure holiday cheer</h3>
-                ${formatCategoryResult(results.costume.jumper, results.costume.allVotes.jumper)}
+                ${formatCategoryResult(results.costume.jumper, results.costume.allVotes.jumper, 'costume')}
             </div>
             
             <div class="category-result">
                 <h3>3. 😄 Holiday Humor – the costume that makes everyone laugh out loud</h3>
-                ${formatCategoryResult(results.costume.humor, results.costume.allVotes.humor)}
+                ${formatCategoryResult(results.costume.humor, results.costume.allVotes.humor, 'costume')}
             </div>
         </div>
     `;
@@ -142,13 +163,15 @@ function displayResults(results) {
 }
 
 function formatCategoryResult(winnerData, allVotes, competition = null) {
-    if (!allVotes || Object.keys(allVotes).length === 0) {
+    // Check if allVotes is valid
+    if (!allVotes || typeof allVotes !== 'object' || Object.keys(allVotes).length === 0) {
         return '<div class="no-votes">No votes yet</div>';
     }
 
     let html = '';
     
-    if (winnerData.winners && winnerData.winners.length > 0 && winnerData.votes > 0) {
+    // Check if winnerData is valid and has winners
+    if (winnerData && winnerData.winners && Array.isArray(winnerData.winners) && winnerData.winners.length > 0 && winnerData.votes > 0) {
         html += '<div class="winner">';
         html += '<div class="winner-label">🏆 Winner' + (winnerData.winners.length > 1 ? 's (Tie)' : '') + ':</div>';
         winnerData.winners.forEach(winner => {
@@ -165,18 +188,23 @@ function formatCategoryResult(winnerData, allVotes, competition = null) {
     
     // Sort by vote count (descending)
     const sortedVotes = Object.entries(allVotes)
+        .filter(([option, count]) => count > 0) // Only show options with votes
         .sort((a, b) => b[1] - a[1]);
     
-    sortedVotes.forEach(([option, count]) => {
-        const isWinner = winnerData.winners && winnerData.winners.includes(option) && count === winnerData.votes;
-        const displayName = getDisplayName(option, competition);
-        html += `
-            <div class="vote-item ${isWinner ? 'winner-item' : ''}">
-                <span class="vote-item-name">${displayName}</span>
-                <span class="vote-item-count">${count} vote${count !== 1 ? 's' : ''}</span>
-            </div>
-        `;
-    });
+    if (sortedVotes.length === 0) {
+        html += '<div class="no-votes">No votes yet</div>';
+    } else {
+        sortedVotes.forEach(([option, count]) => {
+            const isWinner = winnerData && winnerData.winners && winnerData.winners.includes(option) && count === winnerData.votes;
+            const displayName = getDisplayName(option, competition);
+            html += `
+                <div class="vote-item ${isWinner ? 'winner-item' : ''}">
+                    <span class="vote-item-name">${displayName}</span>
+                    <span class="vote-item-count">${count} vote${count !== 1 ? 's' : ''}</span>
+                </div>
+            `;
+        });
+    }
     
     html += '</div>';
     
